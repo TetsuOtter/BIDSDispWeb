@@ -1,0 +1,1514 @@
+﻿<Page Loaded="OnLoad"
+      Unloaded="OnUnLoad"
+    x:Class="TR.BIDSDispWeb.TopPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Grid Background="Black" Height="800" Width="1280">
+    <Grid Name="TopGrid"
+            Background="DarkGray"
+            Visibility="Visible"
+            Height="800"
+            Width="1280">
+      <Label Content="BIDS表示部 サンプルプログラム(β版)" Margin="32" FontSize="48" Foreground="Red"/>
+      <TextBlock Margin="64,108,0,0"
+                 Text="このページは、BIDS表示部のサンプルプログラムのうち、「SkyWay」を用いた表示プログラムです。
+                 &#xa;このプログラムは、C#にて開発され、C#HTML5にてJavaScriptへと変換されたものなどで動作しています。
+                 &#xa;ソースコードは、MITライセンスのもと、Githubにて公開しております。→https://github.com/TetsuOtter/BIDSDispWeb
+                 &#xa;詳しい使い方や注意点などは、本プログラムの紹介ページをご覧ください。→https://technotter.com/BIDS/BIDSDispWeb
+                 &#xa;一部のブラウザでは、表示解像度によって表示がにじむ可能性があります。
+                 &#xa;あくまでβ版のため、consoleにlogが大量排出されます。"
+                 TextAlignment="Left"
+                 TextWrapping="NoWrap"
+                 FontSize="22"/>
+      <TextBlock Text="使用方法" Margin="32,300,0,0" FontSize="30" Foreground="Red"/>
+      <TextBlock Margin="64,360,0,0"
+                 Text="1. BVEを使用するコンピューターで「BIDS_Server.exe」を実行する。
+                  &#xa;2. http://trtec.s1006.technotter.com/ws_sw/index.htmlにアクセスし、「WebSocket再接続」をクリックする。
+                  &#xa;3. 下のほうにある「接続先」に、上記ページで設定したIDを入力する。
+                  &#xa;4. 「接続検証」ボタンをクリックし、接続を検証します。
+                  &#xa;5. 「接続成功」表示を確認後、「表示選択」をクリックし、表示選択ページへと移動します。"
+                 TextAlignment="Left"
+                 TextWrapping="NoWrap"
+                 FontSize="24"/>
+      <TextBlock Text="LAN外を経由する接続の場合、接続遅延が激しい場合があります。" TextAlignment="Center" Margin="0,520,0,0" FontSize="32" Foreground="Red"/>
+      <Label Content="接続先"
+             Margin="64,610,0,0"
+             VerticalAlignment="Top"
+             HorizontalAlignment="Left"
+             FontSize="32"/>
+      <TextBox Name="AddrBox"
+               FontSize="36"
+               Padding="5"
+               Margin="200,600,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Height="60"
+               Width="400"/>
+      <Button Content="接続検証"
+              Padding="5"
+              FontSize="28"
+              Click="CheckConnect"
+              Margin="620,605,0,0"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Height="50"
+              Width="200"/>
+      <TextBlock Name="IsSkyWayConnectedBlock"
+                 Background="Black"
+                 Foreground="White"
+                 Text="接続成功"
+                 Padding="5"
+                 Height="50"
+                 Width="150"
+                 TextAlignment="Center"
+                 Margin="850,605,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 FontSize="28"/>
+
+      <Button Name="TopGrid_SelectGrid"
+              Margin="140,680,140,20"
+              Width="500"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Content="表示選択"
+              IsEnabled="False"
+              FontSize="64"
+              Click="SelectPage">
+        <Button.RenderTransform>
+          <ScaleTransform ScaleX="2" ScaleY="1"/>
+        </Button.RenderTransform>
+      </Button>
+    </Grid>
+    <Grid Name="SPGrid_TR01"
+          Visibility="Collapsed"
+            Background="#111A22"
+            Height="800"
+            Width="1280">
+      <!--Path変換前図形-->
+      <!--
+        <Rectangle Visibility="Collapsed"
+                   Height="800"
+                   Width="1280"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   Fill="#222C33"/>
+        <Ellipse Visibility="Collapsed"
+                 Height="320"
+                 Fill="Black"
+                 Width="320"
+                 Margin="40,380,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Ellipse Visibility="Collapsed"
+                 Height="320"
+                 Fill="Black"
+                 Width="320"
+                 Margin="400,380,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Ellipse Visibility="Collapsed"
+                 Height="400"
+                 Fill="Black"
+                 Width="400"
+                 Margin="800,300,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Polygon Visibility="Collapsed"
+                 Points="40,0 80,60 0,60"
+                 Fill="Black"
+                 Margin="30,110,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Ellipse Visibility="Collapsed"
+                 Height="70"
+                 Width="70"
+                 Fill="Black"
+                 Margin="35,190,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Polygon Visibility="Collapsed"
+                 Points="0,0 40,60 80,0"
+                 Fill="Black"
+                 Margin="30,280,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+        <Rectangle Visibility="Collapsed"
+                   Height="180"
+                   Width="360"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="800,50,0,0"
+                   Fill="Black"/>
+        <Rectangle Visibility="Collapsed"
+                   Height="250"
+                   Width="400"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="320,50,0,0"
+                   Fill="Black"/>
+        -->
+      <!--圧力計メモリ-->
+      <!--
+                <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="-40"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="-14"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="12"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="38"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="64"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="90"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="116"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="142"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="168"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="194"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="6"
+                   Width="31"
+                   Margin="42,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="158" CenterY="3" Angle="220"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        -->
+      <!--
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-34.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-29.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-24.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-19.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-8.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="-3.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="1.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="6.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="17.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="22.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="27.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="32.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="43.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="48.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="53.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="58.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="69.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="74.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="79.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="84.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="95.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="100.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="105.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="110.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="121.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="126.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="131.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="136.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="147.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="152.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="157.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="162.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="173.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="178.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="183.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="188.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="199.2"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="204.4"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="209.6"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="Lime"
+                   Height="4"
+                   Width="20"
+                   Margin="52,537,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="148" CenterY="2" Angle="214.8"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        -->
+
+      <!--速度計メモリ-->
+      <!--
+        <Polygon Points="0,0 40,3 40,9 0,12 0,0"
+                 Fill="White"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Opacity="0.8"
+                 Margin="800,495,0,0"
+                 Height="12"
+                 Width="40">
+          <Polygon.RenderTransform>
+            <RotateTransform CenterX="200" CenterY="6" Angle="0"/>
+          </Polygon.RenderTransform>
+        </Polygon>
+        <Rectangle Width="40"
+                   Height="8"
+                   Margin="800,496,0,0"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Fill="White"
+                   Opacity="0.8">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="200" CenterY="4" Angle="0"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="20"
+                   Height="4"
+                   Margin="820,498,0,0"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Fill="White"
+                   Opacity="0.8">
+          <Rectangle.RenderTransform>
+            <RotateTransform CenterX="180" CenterY="2" Angle="0"/>
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        -->
+
+
+      <!--MRの赤いやつ-->
+      <Path Data="M20.332428,0 L21.035797,2.3632054 C24.716492,15.316225 26.686584,28.988533 26.686584,43.120733 26.686584,50.82921 26.100433,58.400854 24.970245,65.793581 L24.807495,66.775522 4.2193604,63.588312 4.6644287,60.409231 C5.342865,55.07504 5.6925354,49.638296 5.6925354,44.119924 5.6925354,31.979501 4.0000916,20.234165 0.83813477,9.1067433 L0,6.2906151 z"
+          Fill="Red"
+          HorizontalAlignment="Left"
+          Height="66.776" Margin="322.231,495.844,0,0" Stretch="Fill" UseLayoutRounding="False"
+          VerticalAlignment="Top"
+          Width="26.687"/>
+      <!--圧力計メモリの円環-->
+      <Path Data="M150,21.973736 C221.24472,21.973736 279,79.660049 279,150.81973 279,182.71649 267.39575,211.90619 248.17387,234.40691 L246.71583,236.07047 245.19607,234.79523 246.66351,233.12096 C265.58966,210.96638 277.01538,182.22577 277.01538,150.81973 277.01538,80.754814 220.14865,23.955982 150,23.955988 79.851332,23.955982 22.984612,80.754814 22.984613,150.81973 22.98461,181.47313 33.869257,209.58733 51.988752,231.51685 L54.679377,234.61931 53.159296,235.89328 50.457327,232.77774 C32.054716,210.50557 20.999994,181.95209 20.999994,150.81973 20.999996,79.660049 78.755262,21.973736 150,21.973736 z M150,0 C232.84271,0 300,67.07711 300,149.82092 300,186.58698 286.74084,220.25987 264.738,246.32954 L262.29782,249.14531 260.76645,247.86032 263.20816,245.04277 C284.91763,219.32069 298,186.09676 298,149.82092 298,68.180367 231.73814,1.9976124 150,1.9976107 68.261854,1.9976124 1.9999964,68.180367 1.9999958,149.82092 1.9999953,186.8143 15.60503,220.63385 38.090178,246.56029 L39.089502,247.68515 37.556917,248.9696 36.57789,247.86758 C13.788882,221.59077 -3.6556585E-06,187.31421 6.8212103E-13,149.82092 -3.6556585E-06,67.07711 67.157286,0 150,0 z"
+          Fill="White"
+          HorizontalAlignment="Left"
+                 Height="249.145" Margin="50,389,0,0" Stretch="Fill" UseLayoutRounding="False"
+          VerticalAlignment="Top" Width="300"/>
+      <!--圧力計メモリ大-->
+      <Path Data="M254.10664,237.46405 L277.82782,257.40121 273.97537,262 250.25417,242.0628 z M55.893372,237.46405 L59.745846,242.0628 36.024647,262 32.172169,257.40121 z M278.81671,185.91353 L308.8627,193.41716 307.41278,199.24208 277.36676,191.73845 z M31.183323,185.91353 L32.633255,191.73845 2.5872481,199.24208 1.1373096,193.41716 z M308.75391,122.28151 L310,128.15356 279.71085,134.60231 278.46475,128.73024 z M1.2461001,122.28151 L31.535244,128.73024 30.289152,134.60231 0,128.15356 z M277.5235,58.392975 L281.21341,63.123585 256.81198,82.219398 253.12212,77.488785 z M32.476509,58.392975 L56.877911,77.488785 53.188011,82.219398 28.78661,63.123585 z M221.49289,14.683356 L226.87971,17.315 213.30518,45.192657 207.91837,42.561012 z M88.507126,14.683356 L102.08167,42.561012 96.694839,45.192657 83.120308,17.315 z M152.00333,0 L157.99669,0 157.99669,31.016739 152.00333,31.016739 z"
+              Fill="Lime"
+              HorizontalAlignment="Left"
+              Height="262"
+              Margin="44.829,382,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="310"/>
+      <!--圧力計メモリ小-->
+      <Path Data="M254.24988,219.28099 L270.67307,230.71091 268.39017,234 251.967,222.5701 z M41.750137,219.28099 L44.033024,222.5701 27.609829,234 25.326952,230.71091 z M260.28467,209.34396 L277.67477,219.23631 275.69901,222.71904 258.30887,212.82669 z M35.715359,209.34396 L37.691147,212.82669 20.301027,222.71904 18.325235,219.23631 z M265.3952,198.9001 L283.6091,207.17351 281.9567,210.82123 263.74277,202.54782 z M30.604813,198.9001 L32.257248,202.54782 14.043346,210.82123 12.390905,207.17351 z M269.53946,188.03543 L288.42722,194.62176 287.11176,198.40445 268.22397,191.81811 z M26.460562,188.03543 L27.776049,191.81811 8.8882799,198.40445 7.5727978,194.62176 z M274.80084,165.40404 L294.56564,168.46794 293.95367,172.42627 274.18887,169.36237 z M21.199205,165.40404 L21.811148,169.36237 2.0463383,172.42627 1.4343828,168.46794 z M275.8746,153.82361 L295.83542,155.08113 295.58426,159.0787 275.62344,157.82117 z M20.125393,153.82361 L20.376553,157.82117 0.41576996,159.0787 0.16460456,155.08115 z M295.88834,141.63419 L296.00003,145.63811 276.00757,146.1973 275.89587,142.19339 z M0.11168887,141.63419 L20.104141,142.19337 19.992456,146.1973 0,145.63809 z M294.72394,128.23778 L295.19757,132.21507 275.33801,134.58638 274.86438,130.6091 z M1.2760724,128.23778 L21.13563,130.60908 20.662003,134.58638 0.80244666,132.21507 z M288.79156,102.03632 L289.9744,105.86266 270.86862,111.78493 269.68579,107.95858 z M7.2084484,102.03632 L26.314257,107.95858 25.131405,111.78494 6.0256057,105.86266 z M284.07242,89.446952 L285.59668,93.150192 267.10556,100.78204 265.58124,97.078788 z M11.927618,89.446952 L30.418777,97.078788 28.894468,100.78204 10.403314,93.150192 z M278.23318,77.337684 L280.0864,80.887352 262.36212,90.165947 260.50891,86.616287 z M17.766827,77.337684 L35.491119,86.616287 33.637913,90.165947 15.913616,80.887352 z M271.32199,65.808181 L273.48886,69.175064 256.67731,80.024055 254.51047,76.657188 z M24.678007,65.808181 L41.489555,76.657188 39.322693,80.024055 22.51115,69.175064 z M254.51962,44.862583 L257.25787,47.782455 242.67828,61.492141 239.94006,58.572281 z M41.480396,44.862583 L56.059956,58.572281 53.321739,61.492141 38.74218,47.782455 z M244.76672,35.618889 L247.75793,38.278228 234.47925,53.254665 231.48802,50.595329 z M51.233303,35.618889 L64.511993,50.595329 61.520763,53.254665 48.242069,38.278228 z M234.2173,27.29836 L237.43692,29.675283 225.56839,45.795204 222.34877,43.418281 z M61.782703,27.29836 L73.651237,43.418281 70.431633,45.795204 58.563099,29.675283 z M222.95824,19.969494 L226.37971,22.044445 216.01906,39.175155 212.59755,37.100197 z M73.041786,19.969494 L83.402458,37.100197 79.980957,39.175155 69.6203,22.044445 z M198.68683,8.5193917 L202.42619,9.9417597 195.32394,28.663879 191.58459,27.24151 z M97.313187,8.5193917 L104.41542,27.24151 100.67608,28.663879 93.573837,9.9417597 z M185.8743,4.4924003 L189.72699,5.5695483 184.34854,24.859174 180.49582,23.782026 z M110.12572,4.4924003 L115.50418,23.782026 111.65149,24.859174 106.27303,5.5695483 z M172.75002,1.6447973 L176.68434,2.3678595 173.07391,22.066221 169.13957,21.343155 z M123.25,1.6447973 L126.86043,21.343155 122.9261,22.066221 119.31567,2.3678595 z M159.42201,0 L163.40558,0.36303069 161.59293,20.307983 157.60933,19.944961 z M136.57802,0 L138.39069,19.944961 134.40709,20.307983 132.59442,0.36303069 z"
+              Fill="Lime" Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="234"
+              Margin="52.002,391.428,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="296"/>
+      <!--圧力計文字-->
+      <TextBlock Text="0"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="110,590,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="200"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="85,500,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="400"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="125,430,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="600"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="210,430,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="800"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="265,500,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="1000"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="225,590,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="kPa"
+                   Width="100"
+                   TextAlignment="Center"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="150,650,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+      <!--圧力計メモリの円環-->
+      <Path Data="M150,21.973736 C221.24472,21.973736 279,79.660049 279,150.81973 279,182.71649 267.39575,211.90619 248.17387,234.40691 L246.71583,236.07047 245.19607,234.79523 246.66351,233.12096 C265.58966,210.96638 277.01538,182.22577 277.01538,150.81973 277.01538,80.754814 220.14865,23.955982 150,23.955988 79.851332,23.955982 22.984612,80.754814 22.984613,150.81973 22.98461,181.47313 33.869257,209.58733 51.988752,231.51685 L54.679377,234.61931 53.159296,235.89328 50.457327,232.77774 C32.054716,210.50557 20.999994,181.95209 20.999994,150.81973 20.999996,79.660049 78.755262,21.973736 150,21.973736 z M150,0 C232.84271,0 300,67.07711 300,149.82092 300,186.58698 286.74084,220.25987 264.738,246.32954 L262.29782,249.14531 260.76645,247.86032 263.20816,245.04277 C284.91763,219.32069 298,186.09676 298,149.82092 298,68.180367 231.73814,1.9976124 150,1.9976107 68.261854,1.9976124 1.9999964,68.180367 1.9999958,149.82092 1.9999953,186.8143 15.60503,220.63385 38.090178,246.56029 L39.089502,247.68515 37.556917,248.9696 36.57789,247.86758 C13.788882,221.59077 -3.6556585E-06,187.31421 6.8212103E-13,149.82092 -3.6556585E-06,67.07711 67.157286,0 150,0 z"
+          Fill="White"
+          HorizontalAlignment="Left"
+                 Height="249.145" Margin="410,389,0,0" Stretch="Fill" UseLayoutRounding="False"
+          VerticalAlignment="Top" Width="300"/>
+      <!--圧力計メモリ大-->
+      <Path Data="M254.10664,237.46405 L277.82782,257.40121 273.97537,262 250.25417,242.0628 z M55.893372,237.46405 L59.745846,242.0628 36.024647,262 32.172169,257.40121 z M278.81671,185.91353 L308.8627,193.41716 307.41278,199.24208 277.36676,191.73845 z M31.183323,185.91353 L32.633255,191.73845 2.5872481,199.24208 1.1373096,193.41716 z M308.75391,122.28151 L310,128.15356 279.71085,134.60231 278.46475,128.73024 z M1.2461001,122.28151 L31.535244,128.73024 30.289152,134.60231 0,128.15356 z M277.5235,58.392975 L281.21341,63.123585 256.81198,82.219398 253.12212,77.488785 z M32.476509,58.392975 L56.877911,77.488785 53.188011,82.219398 28.78661,63.123585 z M221.49289,14.683356 L226.87971,17.315 213.30518,45.192657 207.91837,42.561012 z M88.507126,14.683356 L102.08167,42.561012 96.694839,45.192657 83.120308,17.315 z M152.00333,0 L157.99669,0 157.99669,31.016739 152.00333,31.016739 z"
+              Fill="Lime"
+              HorizontalAlignment="Left"
+              Height="262"
+              Margin="404.829,382,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="310"/>
+      <!--圧力計メモリ小-->
+      <Path Data="M254.24988,219.28099 L270.67307,230.71091 268.39017,234 251.967,222.5701 z M41.750137,219.28099 L44.033024,222.5701 27.609829,234 25.326952,230.71091 z M260.28467,209.34396 L277.67477,219.23631 275.69901,222.71904 258.30887,212.82669 z M35.715359,209.34396 L37.691147,212.82669 20.301027,222.71904 18.325235,219.23631 z M265.3952,198.9001 L283.6091,207.17351 281.9567,210.82123 263.74277,202.54782 z M30.604813,198.9001 L32.257248,202.54782 14.043346,210.82123 12.390905,207.17351 z M269.53946,188.03543 L288.42722,194.62176 287.11176,198.40445 268.22397,191.81811 z M26.460562,188.03543 L27.776049,191.81811 8.8882799,198.40445 7.5727978,194.62176 z M274.80084,165.40404 L294.56564,168.46794 293.95367,172.42627 274.18887,169.36237 z M21.199205,165.40404 L21.811148,169.36237 2.0463383,172.42627 1.4343828,168.46794 z M275.8746,153.82361 L295.83542,155.08113 295.58426,159.0787 275.62344,157.82117 z M20.125393,153.82361 L20.376553,157.82117 0.41576996,159.0787 0.16460456,155.08115 z M295.88834,141.63419 L296.00003,145.63811 276.00757,146.1973 275.89587,142.19339 z M0.11168887,141.63419 L20.104141,142.19337 19.992456,146.1973 0,145.63809 z M294.72394,128.23778 L295.19757,132.21507 275.33801,134.58638 274.86438,130.6091 z M1.2760724,128.23778 L21.13563,130.60908 20.662003,134.58638 0.80244666,132.21507 z M288.79156,102.03632 L289.9744,105.86266 270.86862,111.78493 269.68579,107.95858 z M7.2084484,102.03632 L26.314257,107.95858 25.131405,111.78494 6.0256057,105.86266 z M284.07242,89.446952 L285.59668,93.150192 267.10556,100.78204 265.58124,97.078788 z M11.927618,89.446952 L30.418777,97.078788 28.894468,100.78204 10.403314,93.150192 z M278.23318,77.337684 L280.0864,80.887352 262.36212,90.165947 260.50891,86.616287 z M17.766827,77.337684 L35.491119,86.616287 33.637913,90.165947 15.913616,80.887352 z M271.32199,65.808181 L273.48886,69.175064 256.67731,80.024055 254.51047,76.657188 z M24.678007,65.808181 L41.489555,76.657188 39.322693,80.024055 22.51115,69.175064 z M254.51962,44.862583 L257.25787,47.782455 242.67828,61.492141 239.94006,58.572281 z M41.480396,44.862583 L56.059956,58.572281 53.321739,61.492141 38.74218,47.782455 z M244.76672,35.618889 L247.75793,38.278228 234.47925,53.254665 231.48802,50.595329 z M51.233303,35.618889 L64.511993,50.595329 61.520763,53.254665 48.242069,38.278228 z M234.2173,27.29836 L237.43692,29.675283 225.56839,45.795204 222.34877,43.418281 z M61.782703,27.29836 L73.651237,43.418281 70.431633,45.795204 58.563099,29.675283 z M222.95824,19.969494 L226.37971,22.044445 216.01906,39.175155 212.59755,37.100197 z M73.041786,19.969494 L83.402458,37.100197 79.980957,39.175155 69.6203,22.044445 z M198.68683,8.5193917 L202.42619,9.9417597 195.32394,28.663879 191.58459,27.24151 z M97.313187,8.5193917 L104.41542,27.24151 100.67608,28.663879 93.573837,9.9417597 z M185.8743,4.4924003 L189.72699,5.5695483 184.34854,24.859174 180.49582,23.782026 z M110.12572,4.4924003 L115.50418,23.782026 111.65149,24.859174 106.27303,5.5695483 z M172.75002,1.6447973 L176.68434,2.3678595 173.07391,22.066221 169.13957,21.343155 z M123.25,1.6447973 L126.86043,21.343155 122.9261,22.066221 119.31567,2.3678595 z M159.42201,0 L163.40558,0.36303069 161.59293,20.307983 157.60933,19.944961 z M136.57802,0 L138.39069,19.944961 134.40709,20.307983 132.59442,0.36303069 z"
+              Fill="Lime" Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="234"
+              Margin="412.002,391.428,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="296"/>
+      <!--圧力計文字-->
+      <TextBlock Text="0"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="470,590,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="200"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="445,500,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="400"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="485,430,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="600"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="570,430,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="800"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="625,500,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="1000"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="585,590,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Text="kPa"
+                   Width="100"
+                   TextAlignment="Center"
+                   Foreground="Lime" Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Margin="510,650,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+      <Path Name="SPGrid_TR01_SP90Memori"
+              Visibility="Collapsed"
+              Data="M72.426735,301.40909 L76.285873,306.00324 47.55452,334 39.83625,324.81168 z M64.391899,289.53854 L66.676178,292.82166 50.242928,304.23065 47.958649,300.94757 z M56.805393,277.16409 L58.782387,280.64044 41.381622,290.51474 39.404621,287.03839 z M50.372849,264.15372 L52.026291,267.79474 33.801247,276.05307 32.147793,272.41199 z M45.147224,250.6145 L46.463512,254.39028 27.564182,260.96457 26.247898,257.18881 z M353.31262,234.71823 L392.14871,244.39067 390.21213,252.14946 351.37604,242.47704 z M40.687389,234.71823 L42.623974,242.47704 3.7878892,252.14946 1.8512973,244.39067 z M355.52151,222.39887 L375.29843,225.45717 374.6861,229.40827 354.90918,226.34996 z M38.478497,222.39887 L39.090832,226.34996 19.313913,229.40827 18.701591,225.45717 z M356.90973,207.95467 L376.88272,209.2099 376.63141,213.20018 356.65845,211.94495 z M37.090286,207.95467 L37.341606,211.94495 17.368603,213.20018 17.117287,209.2099 z M376.98642,192.88606 L377.09814,196.88266 357.09344,197.44084 356.98169,193.44423 z M17.013634,192.88606 L37.018322,193.44423 36.906567,197.44084 16.901884,196.88266 z M375.60852,176.62003 L376.08246,180.59006 356.21072,182.95705 355.73682,178.98702 z M18.391489,176.62003 L38.263206,178.98702 37.789295,182.95705 17.917576,180.59006 z M391.50354,153.4781 L394.00003,165.21047 354.22556,170.59003 352.97729,164.72385 z M2.4964912,153.4781 L41.02272,164.72383 39.774467,170.59003 0,165.21047 z M368.46576,144.79532 L369.64932,148.61467 350.53186,154.52611 349.3483,150.70676 z M25.534241,144.79532 L44.651749,150.70676 43.468182,154.52611 24.350672,148.61467 z M362.75967,129.49861 L364.28491,133.19508 345.78241,140.813 344.2572,137.1165 z M31.240351,129.49861 L49.742825,137.1165 48.21759,140.813 29.715115,133.19508 z M355.68918,114.78146 L357.54352,118.32463 339.80838,127.58628 337.95401,124.04311 z M38.31086,114.78146 L56.046001,124.04311 54.191666,127.58628 36.456512,118.32463 z M347.31244,100.76499 L349.48065,104.1257 332.65878,114.95488 330.4906,111.59417 z M46.687565,100.76499 L63.509399,111.59417 61.341217,114.95488 44.519382,104.1257 z M326.92639,75.288919 L329.66632,78.203447 315.07785,91.888085 312.33792,88.973558 z M67.073608,75.288919 L81.662094,88.973558 78.922195,91.888085 64.33371,78.203447 z M352.23648,73.681733 L357.16486,79.982919 325.62473,104.59805 320.69635,98.296853 z M41.763561,73.681733 L73.303688,98.296853 68.37532,104.59805 36.83519,79.982919 z M315.0849,64.039003 L318.07794,66.69349 304.79111,81.642564 301.79807,78.988084 z M78.915146,64.039003 L92.201973,78.988084 89.2089,81.642564 75.922089,66.69349 z M302.27136,53.90746 L305.49298,56.280038 293.61719,72.370507 290.39557,69.997918 z M91.728653,53.90746 L103.60445,69.997918 100.38287,72.370507 88.507072,56.280038 z M288.59137,44.977677 L292.01495,47.048825 281.64792,64.148233 278.22433,62.077085 z M105.40868,44.977677 L115.7757,62.077085 112.3521,64.148233 101.98508,47.048825 z M259.08838,31.006889 L262.83002,32.426656 255.72345,51.114568 251.98181,49.694791 z M134.91164,31.006889 L142.0182,49.694791 138.27657,51.114568 131.16998,32.426656 z M243.5083,26.080884 L247.36336,27.156074 241.9816,46.410462 238.12654,45.335271 z M150.49171,26.080884 L155.87349,45.335271 152.01843,46.410462 146.63666,27.156074 z M227.54539,22.585702 L231.48213,23.307443 227.86949,42.969815 223.93275,42.248067 z M166.45464,22.585702 L170.06726,42.248067 166.13052,42.969815 162.51788,23.307443 z M211.33105,20.550077 L215.31708,20.912444 213.5033,40.820962 209.51727,40.458604 z M182.66896,20.550077 L184.48274,40.458604 180.49672,40.820962 178.68294,20.912444 z M279.33289,18.602395 L290.12515,23.860431 269.88129,58.481137 264.48514,55.852121 z M114.66713,18.602395 L129.51486,55.852121 124.11873,58.481137 103.87486,23.860431 z M192.99751,0 L201.00252,0 201.00252,39.981595 192.99751,39.981595 z"
+              Fill="Lime"
+              Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="334"
+              Margin="803.123,300,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="394"/>
+      <Path Name="SPGrid_TR01_SP120Memori"
+              Visibility="Collapsed"
+              Data="M338.06165,277.22363 L374.202,294.61441 368.20212,305 335.06171,282.41647 z M57.938366,277.22363 L60.938316,282.41647 27.797871,305 21.797977,294.61441 z M342.68127,267.16998 L360.65683,275.93179 358.90341,279.52463 340.92783,270.76285 z M53.318718,267.16998 L55.072178,270.76285 37.0966,279.52463 35.343151,275.93179 z M347.09604,256.91748 L365.6394,264.40478 364.14099,268.11111 345.59766,260.62384 z M48.903954,256.91748 L50.402355,260.62384 31.858995,268.11111 30.360603,264.40478 z M350.78445,246.38215 L369.80524,252.55853 368.56921,256.36032 349.54837,250.18394 z M45.215569,246.38215 L46.451614,250.18394 27.43082,256.36032 26.194773,252.55853 z M353.72845,235.61539 L373.13403,240.45071 372.16635,244.32942 352.7608,239.49408 z M42.271534,235.61539 L43.239204,239.49408 23.833632,244.32942 22.865961,240.45071 z M356.26111,222.70125 L395.65271,229.64273 394.26355,237.51613 354.87192,230.57467 z M39.738911,222.70125 L41.128071,230.57467 1.736452,237.51613 0.3472833,229.64273 z M357.3298,213.59814 L377.21988,215.68738 376.80179,219.6629 356.91168,217.57368 z M38.670204,213.59814 L39.08831,217.57368 19.198212,219.6629 18.780106,215.68738 z M357.96957,202.45495 L377.95703,203.15248 377.81741,207.14747 357.82999,206.44993 z M38.030445,202.45495 L38.170036,206.44993 18.182568,207.14747 18.042976,203.15248 z M377.81741,190.59672 L377.95703,194.59173 357.96957,195.28927 357.82999,191.29428 z M18.182568,190.59672 L38.170036,191.29428 38.030445,195.28927 18.042976,194.59173 z M376.80179,178.08131 L377.21988,182.05684 357.3298,184.14607 356.91168,180.17055 z M19.198212,178.08131 L39.08831,180.17055 38.670204,184.14607 18.780106,182.05684 z M393.91626,159.25909 L396,171.0692 356.08743,175.05813 355.04556,169.15309 z M2.0837352,159.25909 L40.95443,169.15309 39.912556,175.05813 0,171.0692 z M372.16635,153.41481 L373.13403,157.2935 353.72845,162.12883 352.7608,158.25014 z M23.833632,153.41481 L43.239204,158.25014 42.271534,162.12883 22.865961,157.2935 z M368.56921,141.38389 L369.80524,145.18568 350.78445,151.36206 349.54837,147.56027 z M27.43082,141.38389 L46.451614,147.56027 45.215569,151.36206 26.194773,145.18568 z M364.14099,129.63309 L365.6394,133.33943 347.09604,140.82675 345.59766,137.12041 z M31.858995,129.63309 L50.402355,137.12041 48.903954,140.82675 30.360603,133.33943 z M358.90341,118.21958 L360.65683,121.81245 342.68127,130.57423 340.92783,126.98137 z M37.0966,118.21958 L55.072178,126.98137 53.318718,130.57423 35.343151,121.81245 z M346.1058,96.625067 L348.34256,99.939077 331.76205,111.11575 329.52533,107.80174 z M49.894188,96.625067 L66.474655,107.80174 64.237923,111.11575 47.657455,99.939077 z M369.20209,95.474501 L373.20203,102.39825 338.56165,122.3854 334.56171,115.46165 z M26.797888,95.474501 L61.438309,115.46165 57.438374,122.3854 22.79796,102.39825 z M338.60818,86.549254 L341.07077,89.69927 325.31082,102.00458 322.84824,98.854574 z M57.391827,86.549254 L73.151772,98.854574 70.689163,102.00458 54.929222,89.69927 z M330.42551,77.020666 L333.10199,79.991339 318.23935,93.365347 315.5629,90.394682 z M65.574486,77.020666 L80.437126,90.394682 77.760651,93.365347 62.89801,79.991339 z M321.59769,68.08573 L324.47501,70.862577 310.58203,85.240133 307.70477,82.463278 z M74.402313,68.08573 L88.295235,82.463278 85.417938,85.240133 71.525002,70.862577 z M302.18149,52.167822 L305.41751,54.517447 293.66202,70.687391 290.42603,68.337767 z M93.818497,52.167822 L105.574,68.337767 102.33798,70.687391 90.582481,54.517447 z M291.68774,45.2624 L295.07986,47.380705 284.48166,64.330778 281.08954,62.212465 z M104.31225,45.2624 L114.91045,62.212465 111.51832,64.330778 100.92013,47.380705 z M321.95911,42.906794 L331.15149,50.615294 303.14233,79.310247 298.54611,75.455999 z M74.040894,42.906794 L97.453857,75.455999 92.857674,79.310247 64.848526,50.615294 z M280.73755,39.105345 L284.26926,40.982019 274.88,58.629622 271.3483,56.752947 z M115.26244,39.105345 L124.65172,56.752947 121.11999,58.629622 111.73072,40.982019 z M269.38425,33.726641 L273.03839,35.352552 264.90378,53.611712 261.24969,51.985819 z M126.61573,33.726641 L134.75032,51.985819 131.09621,53.611712 122.96161,35.352552 z M245.69138,25.405279 L249.53635,26.507122 244.02371,45.720003 240.17873,44.618155 z M150.30862,25.405279 L155.82127,44.618155 151.97629,45.720003 146.46365,26.507122 z M233.46721,22.503136 L237.37971,23.334253 233.22156,42.884623 229.30904,42.053522 z M162.53281,22.503136 L166.69098,42.053522 162.77844,42.884623 158.62029,23.334253 z M221.07024,20.460245 L225.03122,21.016573 222.2478,40.809206 218.28682,40.252874 z M174.92978,20.460245 L177.7132,40.252874 173.75218,40.809206 170.96878,21.016573 z M208.56085,19.286558 L212.55104,19.565405 211.15593,39.503862 207.16576,39.225023 z M187.43915,19.286558 L188.83424,39.225023 184.84407,39.503862 183.44894,19.565405 z M262.64413,9.6871586 L270.16153,12.421557 256.48096,49.985117 248.96358,47.250712 z M133.35585,9.6871586 L147.03644,47.250712 139.51901,49.985117 125.83845,12.421557 z M192.00011,0 L203.99989,0 200.99995,39.974291 195.00005,39.974291 z"
+              Fill="Lime"
+              Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="305"
+              Margin="801.997,301,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="396"/>
+      <Path Name="SPGrid_TR01_SP140Memori"
+              Visibility="Collapsed"
+              Data="M331.20605,292.24658 L365.33011,313.30414 358.27667,323 327.67938,297.09451 z M68.793922,292.24658 L72.320633,297.09451 41.723312,323 34.669895,313.30414 z M336.16412,283.68253 L353.05069,294.38544 350.90738,297.75845 334.02081,287.05554 z M63.835876,283.68253 L65.979187,287.05554 49.092628,297.75845 46.949314,294.38544 z M341.17258,274.97794 L358.69873,284.60077 356.7717,288.10153 339.24557,278.4787 z M58.827423,274.97794 L60.75444,278.4787 43.228306,288.10153 41.301292,284.60077 z M345.62387,265.97647 L363.72043,274.48123 362.0173,278.09592 343.92078,269.59116 z M54.376114,265.97647 L56.079231,269.59116 37.982689,278.09592 36.279572,274.48123 z M349.50049,256.71359 L368.09601,264.06671 366.62354,267.78113 348.02798,260.42798 z M50.499512,256.71359 L51.972008,260.42798 33.37648,267.78113 31.903982,264.06671 z M353.40509,245.3262 L391.44736,257.67117 388.97525,265.26996 350.93295,252.92499 z M46.594887,245.3262 L49.067028,252.92499 11.024767,265.26996 8.5526285,257.67117 z M355.4707,237.55083 L374.84235,242.51831 373.8476,246.38771 354.47592,241.42024 z M44.529312,237.55083 L45.524071,241.42024 26.152414,246.38771 25.157654,242.51831 z M357.54074,227.72655 L377.18646,231.46941 376.43695,235.39357 356.7912,231.65071 z M42.459274,227.72655 L43.208801,231.65071 23.563057,235.39357 22.813528,231.46941 z M358.98901,217.79186 L378.8313,220.29532 378.32999,224.25874 358.4877,221.75528 z M41.010975,217.79186 L41.512318,221.75528 21.670019,224.25874 21.168686,220.29532 z M359.80984,207.78594 L379.77039,209.04015 379.51923,213.02718 359.55869,211.77297 z M40.190144,207.78594 L40.441303,211.77297 20.480764,213.02718 20.229609,209.04015 z M400,194.75209 L400,206.73685 360,203.74065 360,197.74828 z M0,194.75209 L39.999996,197.74828 39.999996,203.74065 0,206.73685 z M379.51923,186.46431 L379.77039,190.45133 359.80984,191.70554 359.55869,187.71851 z M20.480764,186.46431 L40.441303,187.71851 40.190144,191.70554 20.229609,190.45133 z M378.32999,175.23273 L378.8313,179.19615 358.98901,181.69962 358.4877,177.73621 z M21.670019,175.23273 L41.512318,177.73621 41.010975,181.69962 21.168686,179.19615 z M376.43695,164.09792 L377.18646,168.02205 357.54074,171.76492 356.7912,167.84076 z M23.563057,164.09792 L43.208801,167.84076 42.459274,171.76492 22.813528,168.02205 z M373.8476,153.10378 L374.84235,156.97318 355.4707,161.94066 354.47592,158.07123 z M26.152414,153.10378 L45.524071,158.07123 44.529312,161.94066 25.157654,156.97318 z M388.97525,134.22153 L391.44736,141.82031 353.40509,154.16525 350.93295,146.56648 z M11.024767,134.22153 L49.067028,146.56648 46.594887,154.16525 8.5526285,141.82031 z M366.62354,131.71037 L368.09601,135.42476 349.50049,142.77788 348.02798,139.06351 z M33.37648,131.71037 L51.972008,139.06351 50.499512,142.77788 31.903982,135.42476 z M362.0173,121.39555 L363.72043,125.01025 345.62387,133.51502 343.92078,129.9003 z M37.982689,121.39555 L56.079231,129.9003 54.376114,133.51502 36.279572,125.01025 z M356.7717,111.38993 L358.69873,114.8907 341.17258,124.51354 339.24557,121.01276 z M43.228306,111.38993 L60.75444,121.01276 58.827423,124.51354 41.301292,114.8907 z M350.90738,101.73302 L353.05069,105.10604 336.16412,115.80895 334.02081,112.43594 z M49.092628,101.73302 L65.979187,112.43594 63.835876,115.80895 46.949314,105.10604 z M337.41754,83.61622 L339.96722,86.694352 324.55695,99.426621 322.00729,96.348496 z M62.58247,83.61622 L77.992729,96.348496 75.443031,99.426621 60.032768,86.694352 z M358.27667,78.488938 L365.33011,88.1848 331.20605,109.24235 327.67938,104.39442 z M41.723312,78.488938 L72.320633,104.39442 68.793922,109.24235 34.669895,88.1848 z M329.84525,75.22783 L332.58347,78.139993 318.00409,91.813523 315.26587,88.901361 z M70.154739,75.22783 L84.734116,88.901361 81.995934,91.813523 67.41655,78.139993 z M321.76053,67.330842 L324.67642,70.065553 310.98547,84.626397 308.06958,81.891686 z M78.239456,67.330842 L91.930405,81.891686 89.014519,84.626397 75.323586,70.065553 z M313.19531,59.956456 L316.27734,62.502896 303.52887,77.893579 300.44681,75.347123 z M86.804703,59.956456 L99.553185,75.347123 96.471138,77.893579 83.722656,62.502896 z M294.76016,46.889638 L298.13748,49.03021 287.42093,65.89531 284.04364,63.754724 z M105.23983,46.889638 L115.95637,63.754724 112.57906,65.89531 101.86252,49.03021 z M284.96304,41.24878 L288.46826,43.173345 278.83322,60.677205 275.32797,58.752637 z M115.03695,41.24878 L124.67203,58.752637 121.1668,60.677205 111.53172,43.173345 z M274.8306,36.233449 L278.44992,37.934411 269.93433,56.007936 266.31503,54.306985 z M125.16939,36.233449 L133.68497,54.306985 130.06566,56.007936 121.55007,37.934411 z M314.32098,35.79989 L320.79312,40.496202 297.28171,72.815736 290.80957,68.119439 z M85.679016,35.79989 L109.19043,68.119439 102.71829,72.815736 79.206879,40.496202 z M264.40286,31.863416 L268.12198,33.334054 260.75949,51.90595 257.04037,50.435311 z M135.59714,31.863416 L142.95963,50.435311 139.24052,51.90595 131.87804,33.334054 z M242.82701,25.12567 L246.70134,26.119161 241.72755,45.466203 237.85321,44.472699 z M157.17299,25.12567 L162.14679,44.472699 158.27245,45.466203 153.29866,26.119161 z M231.76405,22.784537 L235.69322,23.533105 231.94559,43.153871 228.01643,42.405297 z M168.23595,22.784537 L171.98357,42.405297 168.05441,43.153871 164.30679,23.533105 z M220.57576,21.141774 L224.54422,21.642465 222.03754,41.459535 218.06908,40.958844 z M179.42426,21.141774 L181.93091,40.958844 177.96245,41.459535 175.45578,21.642465 z M209.30624,20.203895 L213.29836,20.45474 212.04254,40.389882 208.05043,40.13905 z M190.69376,20.203895 L191.94957,40.13905 187.95746,40.389882 186.70166,20.45474 z M256.09708,8.9232445 L267.50974,12.626719 252.29588,49.694753 246.58954,47.842996 z M143.90294,8.9232445 L153.41045,47.842996 147.70412,49.694753 132.49026,12.626719 z M196,0 L204,0 204,39.949147 196,39.949147 z"
+              Fill="Lime"
+              Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="323"
+              Margin="800,300,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="400"/>
+      <Path Name="SPGrid_TR01_SP160Memori"
+              Data="M340.06406,277.22363 L376.20508,294.61441 370.20508,305 337.06406,282.41647 z M59.935932,277.22363 L62.935936,282.41647 29.79492,305 23.79492,294.61441 z M348.58609,258.21554 L367.06369,265.86429 365.53296,269.55743 347.05536,261.90869 z M51.41391,258.21554 L52.944641,261.90869 34.467049,269.55743 32.936317,265.86429 z M355.5834,236.39532 L394.22046,246.74142 392.1499,254.46388 353.51288,244.11776 z M44.416588,236.39532 L46.487148,244.11776 7.8501105,254.46388 5.7795582,246.74142 z M358.89224,217.76127 L378.72113,220.37011 378.19901,224.33334 358.37012,221.7245 z M41.107773,217.76127 L41.629875,221.7245 21.800978,224.33334 21.27887,220.37011 z M400,193.87532 L400,205.86761 360,202.86953 360,196.8734 z M0,193.87532 L39.999996,196.8734 39.999996,202.86953 0,205.86761 z M378.19901,173.41089 L378.72113,177.37411 358.89224,179.98295 358.37012,176.01973 z M21.800978,173.41089 L41.629875,176.01973 41.107773,179.98295 21.27887,177.37411 z M392.1499,143.28035 L394.22046,151.00279 355.5834,161.34889 353.51288,153.62646 z M7.8501105,143.28035 L46.487148,153.62646 44.416588,161.34889 5.7795582,151.00279 z M365.53296,128.1868 L367.06369,131.87993 348.58609,139.52868 347.05536,135.83554 z M34.467049,128.1868 L52.944641,135.83554 51.41391,139.52868 32.936317,131.87993 z M370.20508,94.742918 L376.20508,105.12855 340.06406,122.51928 337.06406,117.32647 z M29.79492,94.742918 L62.935936,117.32647 59.935932,122.51928 23.79492,105.12855 z M341.58609,87.779783 L344.02112,90.951162 328.15405,103.11856 325.71899,99.947195 z M58.413921,87.779783 L74.280991,99.947195 71.84594,103.11856 55.978878,90.951162 z M307.99036,54.943548 L311.16376,57.377027 298.98853,73.233892 295.81512,70.800405 z M92.009651,54.943548 L104.18488,70.800405 101.01146,73.233892 88.836235,57.377027 z M338.59293,54.715024 L344.24979,60.368253 315.96552,88.634344 310.30865,82.981122 z M61.40707,54.715024 L89.691345,82.981122 84.034492,88.634344 55.750214,60.368253 z M267.03525,31.915784 L270.73077,33.44555 263.07712,51.91126 259.38159,50.381513 z M132.96474,31.915784 L140.61841,50.381513 136.9229,51.91126 129.26923,33.44555 z M294.80386,23.77963 L305.19614,29.775774 282.59808,62.895475 277.40192,59.897413 z M105.19616,23.77963 L122.59808,59.897413 117.40192,62.895475 94.803848,29.775774 z M221.51183,20.265836 L225.47762,20.787609 222.86708,40.60375 218.90129,40.081995 z M178.48817,20.265836 L181.09871,40.081995 177.13292,40.60375 174.5224,20.787609 z M247.9001,4.776484 L255.62752,6.8457065 245.27475,45.457899 237.54733,43.388696 z M152.0999,4.776484 L162.45265,43.388696 154.72525,45.457899 144.37248,6.8457065 z M194,0 L205.99998,0 203,39.97429 197,39.97429 z"
+              Fill="Lime"
+              Opacity="0.8"
+              HorizontalAlignment="Left"
+              Height="305"
+              Margin="800,301,0,0"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              VerticalAlignment="Top"
+              Width="400"/>
+
+      <TextBlock Name="SPGrid_TR01_SPMemNum0"
+                   Text="0"
+                   Margin="870,560,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum1"
+                   Text="20"
+                   Margin="850,480,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum2"
+                   Text="40"
+                   Margin="870,415,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum3"
+                   Text="60"
+                   Margin="910,370,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum4"
+                   Text="80"
+                   Margin="980,350,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum5"
+                   Text="100"
+                   Margin="1035,370,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum6"
+                   Text="120"
+                   Margin="1075,415,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum7"
+                   Text="140"
+                   Margin="1095,480,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <TextBlock Name="SPGrid_TR01_SPMemNum8"
+                   Text="160"
+                   Margin="1075,560,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+      <TextBlock Name="SPGrid_TR01_SPMemNum9"
+                   Visibility="Collapsed"
+                   Text="360"
+                   Margin="890,570,0,0"
+                   FontFamily="Arial"
+                   FontSize="32"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+
+      <TextBlock Text="km/h"
+                   Width="100"
+                   TextAlignment="Center"
+                   Foreground="Lime"
+                   Opacity="0.8"
+                   FontFamily="Arial"
+                   FontSize="36"
+                   Margin="950,650,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+      <!--Path生成時回転抑止用四角形-->
+      <!--<Rectangle Visibility="Collapsed" Fill="White" HorizontalAlignment="Left" Height="43" Margin="942,498,0,0" VerticalAlignment="Top" Width="63"/>
+        <Rectangle Visibility="Collapsed" Fill="Red" HorizontalAlignment="Left" Height="23" Margin="943,499,0,0" VerticalAlignment="Top" Width="60"/>-->
+
+
+
+
+      <Path Data="M560,380 C471.63443,380 400,451.63443 400,540 400,628.36554 471.63443,700 560,700 648.36554,700 720,628.36554 720,540 720,451.63443 648.36554,380 560,380 z M200,380 C111.63444,380 40,451.63443 40,540 40,628.36554 111.63444,700 200,700 288.36557,700 360,628.36554 360,540 360,451.63443 288.36557,380 200,380 z M1000,300 C889.54303,300 800,389.54306 800,500 800,610.45697 889.54303,700 1000,700 1110.4569,700 1200,610.45697 1200,500 1200,389.54306 1110.4569,300 1000,300 z M30,280 L70,340 110,280 z M70,190 C50.670033,190 35,205.67003 35,225 35,244.32997 50.670033,260 70,260 89.329964,260 105,244.32997 105,225 105,205.67003 89.329964,190 70,190 z M70,110 L30,170 110,170 z M800,50 L800,230 1160,230 1160,50 z M320,50 L320,300 720,300 720,50 z M0,0 L1280,0 1280,800 0,800 z"
+          Fill="#222C33"
+          HorizontalAlignment="Left"
+          Height="800"
+          Margin="0,0,0,0"
+                   Stretch="Fill" UseLayoutRounding="False"
+          VerticalAlignment="Top"
+          Width="1280">
+        <Path.Effect>
+          <DropShadowEffect ShadowDepth="8" Opacity="0.8"/>
+        </Path.Effect>
+      </Path>
+      <Path Name="SPGrid_TR01_IsDoorClosedPath"
+              Data="M180,19.999999 C91.634438,20 20,91.634438 19.999999,180 20,268.36555 91.634438,340 180,340 268.36555,340 340,268.36555 340,180 340,91.634438 268.36555,20 180,19.999999 z M180,0 C279.41125,0 360,80.588745 360,180 360,279.41125 279.41125,360 180,360 80.588745,360 0,279.41125 0,180 0,80.588745 80.588745,0 180,0 z"
+          Fill="Orange"
+          HorizontalAlignment="Left"
+                 Height="360" Margin="380,360,0,0" Stretch="Fill" UseLayoutRounding="False"
+          VerticalAlignment="Top" Width="360">
+      </Path>
+
+
+
+      <TextBlock Width="320"
+                   FontSize="48"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="40,720,0,0"
+                   Opacity="0.8">
+        <TextBlock.Inlines>
+          <Run Text="MR" Foreground="Red"/>
+          <Run Text="/ER" Foreground="White"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <TextBlock Width="320"
+                   FontSize="48"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="400,720,0,0"
+                   Opacity="0.8">
+        <TextBlock.Inlines>
+          <Run Text="BC" Foreground="Red"/>
+          <Run Text="/BP" Foreground="White"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <Button    Content="Speed"
+                   Click="SPGrid_TR01_MaxSPChangeEv"
+                 IsHitTestVisible="True"
+                   Foreground="White"
+                   Background="#00000000"
+                   Width="200"
+                   FontSize="48"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="900,720,0,0"/>
+
+
+      <Path Name="SPGrid_TR01_RHandF"
+              Data="M40,0 L80,60 L0,60 z"
+          Fill="Khaki"
+          HorizontalAlignment="Left"
+          Height="60"
+          Margin="30,110,0,0"
+                 Stretch="Fill"
+          VerticalAlignment="Top"
+          Width="80">
+      </Path>
+      <Ellipse Name="SPGrid_TR01_RHandN"
+              Height="70"
+                 Width="70"
+                 Fill="Khaki"
+                 Margin="35,190,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top">
+      </Ellipse>
+      <Path Name="SPGrid_TR01_RHandR"
+              Data="M0,0 L40,60 L80,0 z"
+          Fill="Khaki"
+          HorizontalAlignment="Left"
+          Height="60"
+          Margin="30,280,0,0"
+                 Stretch="Fill"
+          VerticalAlignment="Top"
+          Width="80">
+      </Path>
+
+
+      <TextBlock FontSize="64"
+                   Foreground="#CCFFFFFF"
+                   Margin="190,100,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Text="P"/>
+          <Run Name="SPGrid_TR01_PHandNum" Text="99"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <TextBlock FontSize="64"
+                   Foreground="#CCFFFFFF"
+                   Margin="190,200,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Text="B"/>
+          <Run Name="SPGrid_TR01_BHandNum" Text="99"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <TextBlock TextAlignment="Center"
+                   Height="90"
+                   Width="360"
+                   FontSize="64"
+                   Foreground="White"
+                   Margin="800,50,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Name="SPGrid_TR01_HourNum" Text="23"/>
+          <Run Text=":"/>
+          <Run Name="SPGrid_TR01_MinuteNum" Text="59"/>
+          <Run Text=":"/>
+          <Run Name="SPGrid_TR01_SecondNum" Text="59"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <TextBlock Padding="5"
+                   TextAlignment="Right"
+                   Height="110"
+                   Width="360"
+                   FontSize="64"
+                   Foreground="White"
+                   Margin="800,130,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Name="SPGrid_TR01_LocationTextBlock" Text="999999.9"/>
+          <Run Text="m"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+
+      <TextBlock Text="0"
+                   Width="40"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="330,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <TextBlock Text="500"
+                   Width="80"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="460,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <TextBlock Text="1000A"
+                   Width="100"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="600,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="348,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="379,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="409,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="439,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="469,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="498,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="529,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="559,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="589,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="619,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="648,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Button Click="SelectPage"
+                Content="HOME"
+                FontSize="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Height="50"
+                Width="80"/>
+
+      <Rectangle Name="SPGrid_TR01_PlusCurrentBar"
+                   Height="50"
+                   Width="300"
+                   Margin="350,130,0,0"
+                   Fill="GreenYellow"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <Rectangle Name="SPGrid_TR01_MinusCurrentBar"
+                   Height="50"
+                   Width="300"
+                   Margin="350,230,0,0"
+                   Fill="OrangeRed"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+
+      <!--各圧力計の針-->
+      <Path Data="M130,0 C133.45178,-4.7683716E-07 136.49509,1.7488873 138.29216,4.4089049 L138.65126,4.9999998 162.5,4.9999998 162.5,15 138.65126,15 138.29216,15.591094 C136.49509,18.251112 133.45178,20 130,19.999999 126.54822,20 123.50491,18.251112 121.70784,15.591094 L121.34875,15 19.999998,15 0,9.9999995 19.999998,4.9999998 121.34875,4.9999998 121.70784,4.4089049 C123.50491,1.7488873 126.54822,-4.7683716E-07 130,0 z"
+            Fill="White"
+            HorizontalAlignment="Left"
+                   Height="20"
+                Margin="70,530,0,0"
+                Stretch="Fill"
+                RenderTransformOrigin="0.8,0.5"
+                UseLayoutRounding="False"
+            VerticalAlignment="Top"
+            Width="162.5">
+        <Path.RenderTransform>
+          <RotateTransform x:Name="SPGrid_TR01_ERHari" Angle="-40"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path Data="M130,0 C133.41727,9.5367432E-07 136.38969,1.9045396 137.91376,4.7100663 L138.05342,5.0000022 162.5,5.0000022 162.5,13 138.05342,13 137.91376,13.289935 C136.38969,16.095463 133.41727,18.000001 130,18.000002 126.58273,18.000001 123.61031,16.095463 122.08625,13.289935 L121.94658,13 19.999998,13 0,9.000001 19.999998,5.0000022 121.94658,5.0000022 122.08625,4.7100663 C123.61031,1.9045396 126.58273,9.5367432E-07 130,0 z"
+            Fill="Red"
+            HorizontalAlignment="Left"
+                   Height="18" Margin="70,531,0,0" Stretch="Fill" UseLayoutRounding="False"
+            VerticalAlignment="Top"
+                RenderTransformOrigin="0.8,0.5"
+            Width="162.5">
+        <Path.RenderTransform>
+          <RotateTransform x:Name="SPGrid_TR01_MRHari" Angle="-40"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path Data="M130,0 C133.45178,-4.7683716E-07 136.49509,1.7488873 138.29216,4.4089049 L138.65126,4.9999998 162.5,4.9999998 162.5,15 138.65126,15 138.29216,15.591094 C136.49509,18.251112 133.45178,20 130,19.999999 126.54822,20 123.50491,18.251112 121.70784,15.591094 L121.34875,15 19.999998,15 0,9.9999995 19.999998,4.9999998 121.34875,4.9999998 121.70784,4.4089049 C123.50491,1.7488873 126.54822,-4.7683716E-07 130,0 z"
+            Fill="White"
+            HorizontalAlignment="Left"
+                   Height="20"
+                Margin="430,530,0,0"
+                Stretch="Fill"
+                RenderTransformOrigin="0.8,0.5"
+                UseLayoutRounding="False"
+            VerticalAlignment="Top"
+            Width="162.5">
+        <Path.RenderTransform>
+          <RotateTransform x:Name="SPGrid_TR01_BPHari" Angle="-40"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path Data="M130,0 C133.41727,9.5367432E-07 136.38969,1.9045396 137.91376,4.7100663 L138.05342,5.0000022 162.5,5.0000022 162.5,13 138.05342,13 137.91376,13.289935 C136.38969,16.095463 133.41727,18.000001 130,18.000002 126.58273,18.000001 123.61031,16.095463 122.08625,13.289935 L121.94658,13 19.999998,13 0,9.000001 19.999998,5.0000022 121.94658,5.0000022 122.08625,4.7100663 C123.61031,1.9045396 126.58273,9.5367432E-07 130,0 z"
+            Fill="Red"
+            HorizontalAlignment="Left"
+                   Height="18" Margin="430,531,0,0" Stretch="Fill" UseLayoutRounding="False"
+            VerticalAlignment="Top"
+                RenderTransformOrigin="0.8,0.5"
+            Width="162.5">
+        <Path.RenderTransform>
+          <RotateTransform x:Name="SPGrid_TR01_BCHari" Angle="-40"/>
+        </Path.RenderTransform>
+      </Path>
+      <Path Data="M130,0 C133.45178,-4.7683716E-07 136.49509,1.7488873 138.29216,4.4089049 L138.65126,4.9999998 162.5,4.9999998 162.5,15 138.65126,15 138.29216,15.591094 C136.49509,18.251112 133.45178,20 130,19.999999 126.54822,20 123.50491,18.251112 121.70784,15.591094 L121.34875,15 19.999998,15 0,9.9999995 19.999998,4.9999998 121.34875,4.9999998 121.70784,4.4089049 C123.50491,1.7488873 126.54822,-4.7683716E-07 130,0 z"
+            Fill="White"
+            HorizontalAlignment="Left"
+                   Height="28"
+                Margin="818,486,0,0"
+                Stretch="Fill"
+                RenderTransformOrigin="0.8,0.5"
+                UseLayoutRounding="False"
+            VerticalAlignment="Top"
+            Width="227.5">
+        <Path.RenderTransform>
+          <RotateTransform x:Name="SPGrid_TR01_SPHari" Angle="-30"/>
+        </Path.RenderTransform>
+      </Path>
+      <Ellipse Height="6"
+                 Width="6"
+                 Fill="Silver"
+                 Margin="197,537,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+      <Ellipse Height="6"
+                 Width="6"
+                 Fill="Silver"
+                 Margin="557,537,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+      <Ellipse Height="8"
+                 Width="8"
+                 Fill="Silver"
+                 Margin="996,496,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+      
+      <!--速度の数値表記-->
+      <TextBlock Name="SPGrid_TR01_SpeedNumBlock"
+                 Margin="900,580,0,0"
+                 Text="0"
+                 Foreground="White"
+                 FontSize="64"
+                 FontFamily="Arial"
+                 TextAlignment="Center"
+                 Width="200"
+                 Height="60"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+    </Grid>
+    <Grid Name="PageSelectGrid"
+            Background="Black"
+            Height="800"
+            Width="1280"
+            Visibility="Collapsed">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="20"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="20"/>
+        <RowDefinition Height="100"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="60"/>
+      </Grid.RowDefinitions>
+      <TextBlock Text="表示選択"
+                   Grid.Column="1"
+                   Grid.Row="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Foreground="White"
+                   FontSize="64"/>
+      <Button Content="ＴＲ０１型速度計"
+                Click="GridSelected"
+                FontSize="24"
+                Margin="20"
+                Grid.Row="2"
+                Grid.Column="1"/>
+    </Grid>
+
+    <Grid Name="ErrorShowGrid"
+          Visibility="Collapsed"
+          Background="Red">
+      <TextBlock Name="ErrorShowGrid_Title"
+                 Margin="0,64,0,0"
+                 FontSize="128"
+                 Text="タイトルスペース"
+                 TextAlignment="Center"
+                 Foreground="White"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top"/>
+      <TextBlock Name="ErrorShowGrid_Content"
+                 Margin="40,320,40,100"
+                 Width="1200"
+                 TextWrapping="Wrap"
+                 FontSize="64"
+                 Text="コンテンツスペース&#xa;コンテンツスペース2段目&#xa;コンテンツスペースさんだんめ"
+                 TextAlignment="Center"
+                 Foreground="White"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"/>
+      <Button Name="ErrorShowGrid_Button"
+              Margin="0,0,0,64"
+              Height="100"
+              FontSize="64"
+              Content="トップへ"
+              Width="800"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Bottom"/>
+    </Grid>
+
+    <Button Content="☀"
+            Padding="-1"
+              Click="LightChagne"
+              FontSize="24"
+              Margin="1230,750,0,0"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Height="40"
+              Width="40"/>
+    <Button Click="fpsChange"
+                Content="⌛"
+            Padding="-1"
+                FontSize="28"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="1220,10,0,0"
+                Height="50"
+                Width="50"/>
+    <TextBlock Text="Program/Design : © Tetsu Otter 2018"
+                 FontSize="10"
+                 Height="18"
+                 VerticalAlignment="Top"
+                 HorizontalAlignment="Left"
+                 IsHitTestVisible="False"
+                   Margin="0,782,0,0"
+                   TextAlignment="Right"
+                   Foreground="DarkGray"/>
+    <Rectangle   Name="LightAdjusterRec"
+                 Opacity="0"
+                 IsHitTestVisible="False"
+                 Margin="0,0,0,0"
+                 Fill="Black"/>
+  </Grid>
+</Page>

@@ -1,8 +1,7 @@
 ﻿<Application
-    x:Class="ATSDispWeb.App"
+    x:Class="TR.BIDSDispWeb.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ATSDispWeb">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Application.Resources>
         <ResourceDictionary>
