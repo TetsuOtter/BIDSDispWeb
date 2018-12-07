@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Net;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI;
-using System.Threading;
-using System.Runtime.InteropServices;
 
 namespace TR.BIDSDispWeb
 {
   public partial class TopPage : Page
   {
+    static public event EventHandler LightChanged;
     public TopPage()
     {
       InitializeComponent();
@@ -249,30 +239,7 @@ namespace TR.BIDSDispWeb
 
 
     //Grobal
-
-    private void LightChagne(object sender, RoutedEventArgs e)
-    {
-      double opt = 0;
-      switch (LightAdjusterRec.Opacity)
-      {
-        case 0:
-          opt = 0.2;
-          break;
-        case 0.2:
-          opt = 0.3;
-          break;
-        case 0.3:
-          opt = 0.4;
-          break;
-        case 0.4:
-          opt = 0.6;
-          break;
-        case 0.6:
-          opt = 0;
-          break;
-      }
-      LightAdjusterRec.Opacity = opt;
-    }
+    private void LightChagne(object sender, RoutedEventArgs e) => LightChanged?.Invoke(null, null);
 
     private void GridSelected(object sender, RoutedEventArgs e)
     {
@@ -287,24 +254,42 @@ namespace TR.BIDSDispWeb
     int WaitTime = 200;
     private void fpsChange(object sender, RoutedEventArgs e)
     {
-      WaitTime += 100;
-      if (WaitTime > 500) WaitTime = 100;
+      WaitTime += 50;
+      if (WaitTime > 550) WaitTime = 50;
       switch (WaitTime)
       {
+        case 50:
+          ((Button)sender).Content = "🕐";
+          break;
         case 100:
           ((Button)sender).Content = "🕑";
+          break;
+        case 150:
+          ((Button)sender).Content = "🕒";
           break;
         case 200:
           ((Button)sender).Content = "🕓";
           break;
+        case 250:
+          ((Button)sender).Content = "🕔";
+          break;
         case 300:
           ((Button)sender).Content = "🕕";
+          break;
+        case 350:
+          ((Button)sender).Content = "🕖";
           break;
         case 400:
           ((Button)sender).Content = "🕗";
           break;
+        case 450:
+          ((Button)sender).Content = "🕘";
+          break;
         case 500:
           ((Button)sender).Content = "🕙";
+          break;
+        case 550:
+          ((Button)sender).Content = "🕚";
           break;
       }
     }
@@ -391,7 +376,7 @@ namespace TR.BIDSDispWeb
         };
 
 
-    private bool SPGrid_TR01_IsTickDefault = false;
+    private bool SPGrid_TR01_IsTickDefault = true;
     private int SPGrid_TR01_maxSP = 160;
     private Windows.UI.Xaml.Shapes.Path SPGrid_TR01_nowShowingSPMem = null;
     private Windows.UI.Xaml.Shapes.Path SPGrid_TR01_NowShowingSPMem
@@ -565,8 +550,20 @@ namespace TR.BIDSDispWeb
       set
       {
         NowSP = Math.Abs(value);
-        SPGrid_TR01_SpeedNumBlock.Text = ((int)NowSP).ToString();
-        if (SPGrid_TR01_IsTickDefault) NowSP = (int)NowSP;
+        double UrGosa = NowSP - Math.Floor(NowSP);//11.9-11
+        double LrGosa = Math.Ceiling(NowSP) - NowSP;//12-11.9
+        //測定誤差を、数値との離れ具合でランダムに決定する。
+        Random rdm = new Random();
+        if (UrGosa < 0.15 && rdm.Next((int)Math.Floor(UrGosa * 10)) == 0)
+        {
+          NowSP -= 1;
+        }
+        if(LrGosa < 0.15 && rdm.Next((int)Math.Floor(LrGosa * 10)) == 0)
+        {
+          NowSP += 1;
+        }
+        NowSP = Math.Ceiling(NowSP);
+        SPGrid_TR01_SpeedNumBlock.Text = NowSP.ToString();
         if (NowSP >= SPGrid_TR01_MaxSP && NowSP < 360) SPGrid_TR01_MaxSPChangeEv(null, null);
         double Angle = 0;
         switch (SPGrid_TR01_MaxSP)
@@ -589,18 +586,15 @@ namespace TR.BIDSDispWeb
             break;
           case 240:
             Angle = -30;
-            if (SPGrid_TR01_IsTickDefault) Angle += 2 * (int)(NowSP / 2);
-            else Angle += NowSP;
+            Angle += 2 * Math.Round(NowSP / 2);
             break;
           case 320:
             Angle = -30;
-            if (SPGrid_TR01_IsTickDefault) Angle += 1.5 * (int)(NowSP / 2);
-            else Angle += 0.75 * NowSP;
+            Angle += 1.5 * Math.Round(NowSP / 2);
             break;
           case 360:
             Angle = -36;
-            if (SPGrid_TR01_IsTickDefault) Angle += 2.8 * (int)(NowSP / 4);
-            else Angle += 0.7 * NowSP;
+            Angle += 2.8 * Math.Round(NowSP / 4);
             break;
         }
         SPGrid_TR01_SPHari.Angle = Angle;
@@ -613,10 +607,10 @@ namespace TR.BIDSDispWeb
     {
       if (!SPGrid_TR01_IsTickDefault)
       {
-        MR = Math.Round(MR / 10) * 10;
-        ER = Math.Round(ER / 10) * 10;
-        BC = Math.Round(BC / 10) * 10;
-        BP = Math.Round(BP / 10) * 10;
+        MR = Math.Ceiling(MR / 100) * 100;
+        ER = Math.Ceiling(ER / 100) * 100;
+        BC = Math.Ceiling(BC / 100) * 100;
+        BP = Math.Ceiling(BP / 100) * 100;
       }
       //*2.6 / 10kPa
       SPGrid_TR01_MRHari.Angle = MR * 0.26 - 40;
@@ -632,12 +626,14 @@ namespace TR.BIDSDispWeb
         double I = value;
         double PlusW = 0;
         double MinusW = 0;
-        if (!SPGrid_TR01_IsTickDefault) I = Math.Round(I / 10) * 10;
+        if (!SPGrid_TR01_IsTickDefault) I = Math.Ceiling(I / 10) * 10;
 
         if (I >= 0) { PlusW = I * 0.3; MinusW = 0; }
         if (I < 0) { MinusW = Math.Abs(I) * 0.3; PlusW = 0; }
-        SPGrid_TR01_PlusCurrentBar.Width = PlusW;
-        SPGrid_TR01_MinusCurrentBar.Width = MinusW;
+        //SPGrid_TR01_PlusCurrentBar.Width = PlusW;
+        //SPGrid_TR01_MinusCurrentBar.Width = MinusW;
+        SPGrid_TR01_PlusCurrentBar.Margin = new Thickness(50 + PlusW, 130, 0, 0);
+        SPGrid_TR01_MinusCurrentBar.Margin = new Thickness(50 + MinusW, 230, 0, 0);
       }
     }
 

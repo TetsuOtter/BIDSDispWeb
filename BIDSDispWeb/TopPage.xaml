@@ -10,7 +10,7 @@
             Visibility="Visible"
             Height="800"
             Width="1280">
-      <Label Content="BIDS表示部 サンプルプログラム(β版)" Margin="32" FontSize="48" Foreground="Red"/>
+      <Label Content="BIDS表示部 サンプルプログラム(β版 v002)" Margin="32" FontSize="48" Foreground="Red"/>
       <TextBlock Margin="64,108,0,0"
                  Text="このページは、BIDS表示部のサンプルプログラムのうち、「SkyWay」を用いた表示プログラムです。
                  &#xa;このプログラムは、C#にて開発され、C#HTML5にてJavaScriptへと変換されたものなどで動作しています。
@@ -20,18 +20,18 @@
                  &#xa;あくまでβ版のため、consoleにlogが大量排出されます。"
                  TextAlignment="Left"
                  TextWrapping="NoWrap"
-                 FontSize="22"/>
+                 FontSize="20"/>
       <TextBlock Text="使用方法" Margin="32,300,0,0" FontSize="30" Foreground="Red"/>
       <TextBlock Margin="64,360,0,0"
                  Text="1. BVEを使用するコンピューターで「BIDS_Server.exe」を実行する。
-                  &#xa;2. http://trtec.s1006.technotter.com/ws_sw/index.htmlにアクセスし、「WebSocket再接続」をクリックする。
+                  &#xa;2. http://trtec.s1006.xrea.com/ws_sw/index.htmlにアクセスし、「WebSocket再接続」をクリックする。
                   &#xa;3. 下のほうにある「接続先」に、上記ページで設定したIDを入力する。
                   &#xa;4. 「接続検証」ボタンをクリックし、接続を検証します。
                   &#xa;5. 「接続成功」表示を確認後、「表示選択」をクリックし、表示選択ページへと移動します。"
                  TextAlignment="Left"
                  TextWrapping="NoWrap"
-                 FontSize="24"/>
-      <TextBlock Text="LAN外を経由する接続の場合、接続遅延が激しい場合があります。" TextAlignment="Center" Margin="0,520,0,0" FontSize="32" Foreground="Red"/>
+                 FontSize="22"/>
+      <TextBlock Text="LAN外を経由する接続の場合、接続できない場合があります。" TextAlignment="Center" Margin="0,520,0,0" FontSize="32" Foreground="Red"/>
       <Label Content="接続先"
              Margin="64,610,0,0"
              VerticalAlignment="Top"
@@ -1033,6 +1033,174 @@
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"/>
 
+
+      <TextBlock TextAlignment="Center"
+                   Height="90"
+                   Width="360"
+                   FontSize="64"
+                   Foreground="White"
+                   Margin="800,50,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Name="SPGrid_TR01_HourNum" Text="23"/>
+          <Run Text=":"/>
+          <Run Name="SPGrid_TR01_MinuteNum" Text="59"/>
+          <Run Text=":"/>
+          <Run Name="SPGrid_TR01_SecondNum" Text="59"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+      <TextBlock Padding="5"
+                   TextAlignment="Right"
+                   Height="110"
+                   Width="360"
+                   FontSize="64"
+                   Foreground="White"
+                   Margin="800,130,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+        <TextBlock.Inlines>
+          <Run Name="SPGrid_TR01_LocationTextBlock" Text="999999.9"/>
+          <Run Text="m"/>
+        </TextBlock.Inlines>
+      </TextBlock>
+
+      <!--電流計-->
+      <TextBlock Text="0"
+                   Width="40"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="330,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <TextBlock Text="500"
+                   Width="80"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="460,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <TextBlock Text="1000A"
+                   Width="100"
+                   FontSize="32"
+                   FontFamily="Century Gothic"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextAlignment="Center"
+                   Margin="600,50,0,0"
+                   Opacity="0.8"
+                   Foreground="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="379,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="409,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="439,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="469,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="529,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="559,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="589,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="170"
+                   Width="2"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="619,120,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+
+      <Rectangle Name="SPGrid_TR01_PlusCurrentBar"
+                   Height="50"
+                   Width="300"
+                   Margin="350,130,0,0"
+                   Fill="GreenYellow"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      <Rectangle Name="SPGrid_TR01_MinusCurrentBar"
+                   Height="50"
+                   Width="300"
+                   Margin="350,230,0,0"
+                   Fill="OrangeRed"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
+      
+      <Rectangle Height="170"
+                   Width="351"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,120,0,0"
+                   Opacity="1"
+                   Fill="#111A22"/>
+
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="348,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="498,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+      <Rectangle Height="190"
+                   Width="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="648,100,0,0"
+                   Opacity="0.7"
+                   Fill="White"/>
+
+
+
+
       <!--Path生成時回転抑止用四角形-->
       <!--<Rectangle Visibility="Collapsed" Fill="White" HorizontalAlignment="Left" Height="43" Margin="942,498,0,0" VerticalAlignment="Top" Width="63"/>
         <Rectangle Visibility="Collapsed" Fill="Red" HorizontalAlignment="Left" Height="23" Margin="943,499,0,0" VerticalAlignment="Top" Width="60"/>-->
@@ -1130,6 +1298,14 @@
           Width="80">
       </Path>
 
+      <Button Click="SelectPage"
+                Content="HOME"
+                FontSize="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Height="50"
+                Width="80"/>
 
       <TextBlock FontSize="64"
                    Foreground="#CCFFFFFF"
@@ -1151,167 +1327,8 @@
           <Run Name="SPGrid_TR01_BHandNum" Text="99"/>
         </TextBlock.Inlines>
       </TextBlock>
-      <TextBlock TextAlignment="Center"
-                   Height="90"
-                   Width="360"
-                   FontSize="64"
-                   Foreground="White"
-                   Margin="800,50,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top">
-        <TextBlock.Inlines>
-          <Run Name="SPGrid_TR01_HourNum" Text="23"/>
-          <Run Text=":"/>
-          <Run Name="SPGrid_TR01_MinuteNum" Text="59"/>
-          <Run Text=":"/>
-          <Run Name="SPGrid_TR01_SecondNum" Text="59"/>
-        </TextBlock.Inlines>
-      </TextBlock>
-      <TextBlock Padding="5"
-                   TextAlignment="Right"
-                   Height="110"
-                   Width="360"
-                   FontSize="64"
-                   Foreground="White"
-                   Margin="800,130,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top">
-        <TextBlock.Inlines>
-          <Run Name="SPGrid_TR01_LocationTextBlock" Text="999999.9"/>
-          <Run Text="m"/>
-        </TextBlock.Inlines>
-      </TextBlock>
-
-      <TextBlock Text="0"
-                   Width="40"
-                   FontSize="32"
-                   FontFamily="Century Gothic"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   TextAlignment="Center"
-                   Margin="330,50,0,0"
-                   Opacity="0.8"
-                   Foreground="White"/>
-      <TextBlock Text="500"
-                   Width="80"
-                   FontSize="32"
-                   FontFamily="Century Gothic"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   TextAlignment="Center"
-                   Margin="460,50,0,0"
-                   Opacity="0.8"
-                   Foreground="White"/>
-      <TextBlock Text="1000A"
-                   Width="100"
-                   FontSize="32"
-                   FontFamily="Century Gothic"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   TextAlignment="Center"
-                   Margin="600,50,0,0"
-                   Opacity="0.8"
-                   Foreground="White"/>
-      <Rectangle Height="190"
-                   Width="4"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="348,100,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="379,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="409,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="439,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="469,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="190"
-                   Width="4"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="498,100,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="529,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="559,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="589,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="170"
-                   Width="2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="619,120,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Rectangle Height="190"
-                   Width="4"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Margin="648,100,0,0"
-                   Opacity="0.7"
-                   Fill="White"/>
-      <Button Click="SelectPage"
-                Content="HOME"
-                FontSize="20"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="10"
-                Height="50"
-                Width="80"/>
-
-      <Rectangle Name="SPGrid_TR01_PlusCurrentBar"
-                   Height="50"
-                   Width="300"
-                   Margin="350,130,0,0"
-                   Fill="GreenYellow"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"/>
-      <Rectangle Name="SPGrid_TR01_MinusCurrentBar"
-                   Height="50"
-                   Width="300"
-                   Margin="350,230,0,0"
-                   Fill="OrangeRed"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"/>
+      
+      
 
       <!--各圧力計の針-->
       <Path Data="M130,0 C133.45178,-4.7683716E-07 136.49509,1.7488873 138.29216,4.4089049 L138.65126,4.9999998 162.5,4.9999998 162.5,15 138.65126,15 138.29216,15.591094 C136.49509,18.251112 133.45178,20 130,19.999999 126.54822,20 123.50491,18.251112 121.70784,15.591094 L121.34875,15 19.999998,15 0,9.9999995 19.999998,4.9999998 121.34875,4.9999998 121.70784,4.4089049 C123.50491,1.7488873 126.54822,-4.7683716E-07 130,0 z"
@@ -1505,10 +1522,5 @@
                    Margin="0,782,0,0"
                    TextAlignment="Right"
                    Foreground="DarkGray"/>
-    <Rectangle   Name="LightAdjusterRec"
-                 Opacity="0"
-                 IsHitTestVisible="False"
-                 Margin="0,0,0,0"
-                 Fill="Black"/>
   </Grid>
 </Page>

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,11 +15,11 @@ namespace TR.BIDSDispWeb
     }
     readonly double OrigH = 800;
     readonly double OrigW = 1280;
-    double NowHeight;
-    double NowWidth;
     bool IsDebug = false;
     private void OnSizeChange(object sender, SizeChangedEventArgs e)
     {
+      double NowHeight;
+      double NowWidth;
       NowHeight = e.NewSize.Height;
       NowWidth = e.NewSize.Width;
       if (IsDebug || e.NewSize.IsEmpty) return;
@@ -51,8 +48,33 @@ namespace TR.BIDSDispWeb
 
     private void OnLoad(object sender, RoutedEventArgs e)
     {
+      TopPage.LightChanged += TopPage_LightChanged;
       FrontFrame.Source = new Uri("/", UriKind.Relative);
-      OnSizeChange(null, new SizeChangedEventArgs(new Size(FrontFrame.Width, FrontFrame.Height)));
+      OnSizeChange(null, new SizeChangedEventArgs(new Size(Width, Height)));
+    }
+
+    private void TopPage_LightChanged(object sender, EventArgs e)
+    {
+      double opt = 0;
+      switch (LightAdjusterRec.Opacity)
+      {
+        case 0:
+          opt = 0.2;
+          break;
+        case 0.2:
+          opt = 0.3;
+          break;
+        case 0.3:
+          opt = 0.4;
+          break;
+        case 0.4:
+          opt = 0.6;
+          break;
+        case 0.6:
+          opt = 0;
+          break;
+      }
+      LightAdjusterRec.Opacity = opt;
     }
   }
 }
